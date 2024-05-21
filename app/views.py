@@ -40,5 +40,5 @@ def signin(request):
   if request.method == 'POST':
     pass
   else:
-    
+    ...
   return render(request, "signin.html")
