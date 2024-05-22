@@ -57,9 +57,11 @@
                             color: red;
                         }
                     </style>
-                    {% for message in messages %}
-                        <h5>{{ message }}</h5>
-                    {% endfor %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <h5>{{ message }}</h5>
+                        {% endfor %}
+                    {% endif %}
                 </div>
 
                 <form action="" method="POST">
