@@ -200,8 +200,11 @@ def profile(request, pk):
 
   user_followers = len(FollowersCount.objects.filter(user=pk))
   user_following = len(FollowersCount.objects.filter(follower=pk))
-      
-      
+
+  admin = False
+  if request.user.is_staff:
+    admin = True
+           
   context = {
     "user_object": user_object,
     "user_profile": user_profile,
@@ -210,13 +213,13 @@ def profile(request, pk):
     "button_text": button_text,
     'user_followers': user_followers,
     'user_following': user_following,
+    'admin': admin,
   }
   # Added delete function
   if request.method == "POST":
     delete = request.POST.get("delete")
     DeletePost(delete)
     return redirect('profile', pk=pk)
-
 
   return render(request, 'profile.html', context)
   

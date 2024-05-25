@@ -69,7 +69,8 @@
 						<div class="col-lg-2 col-sm-3">
 							<div class="user-avatar">
 								<figure>
-									<img src="{{user_profile.profile_img.url}}">
+									<img src="{{user_profile.profile_img.url}}"" style="height: 150px; width: 100% align-self: start;
+									object-fit: cover;">
 									{% comment %} <form class="edit-phto">
 										<i class="fa fa-camera-retro"></i>
 										<label class="fileContainer">
@@ -149,7 +150,7 @@
 											<form action="" method="POST">
 											{% csrf_token %}
 											<input value={{post.id}} name="delete" style: hidden></input>
-											{% if user.username == post.user %}
+											{% if user.username == post.user or admin == True %}
 												<center><input type="submit" value="X" style="background-color: red ; color: white; font-weight: bold;"></input></center>
 											{% endif %}
 											{% comment %} <a href="{% url "delete_post" post.id %}">Test</a></form> {% endcomment %}
