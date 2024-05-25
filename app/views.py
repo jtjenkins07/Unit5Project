@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Profile, Post, LikePost, FollowersCount
+from .models import Profile, Post, LikePost, FollowersCount, DeletePost
 from django.core.exceptions import ObjectDoesNotExist
 from itertools import chain
 import uuid
@@ -200,7 +200,8 @@ def profile(request, pk):
 
   user_followers = len(FollowersCount.objects.filter(user=pk))
   user_following = len(FollowersCount.objects.filter(follower=pk))
-
+      
+      
   context = {
     "user_object": user_object,
     "user_profile": user_profile,
@@ -210,6 +211,13 @@ def profile(request, pk):
     'user_followers': user_followers,
     'user_following': user_following,
   }
+  # Added delete function
+  if request.method == "POST":
+    delete = request.POST.get("delete")
+    DeletePost(delete)
+    return redirect('profile', pk=pk)
+
+
   return render(request, 'profile.html', context)
   
 @login_required(login_url='signin')
@@ -253,25 +261,31 @@ def search(request):
 
   return render(request, 'search.html', {"user_profile":user_profile, 'username_profile_list':username_profile_list})
 
-@login_required(login_url='signin')  
-def delete_post(request, post_id):
-  if request.method == "POST":
-    username = request.user.username 
-    print("username:", username)
-    try:
-      post = Post.objects.get(id=post_id, username=username)
-      post.delete()
-      return redirect('profile')
-    except ObjectDoesNotExist:
-      return redirect('profile')
-  return redirect('profile')
+# @login_required(login_url='signin')  
+# def delete_post(request, post_id):
+#   user_object = User.objects.get(username=request.user.username)
+#   user_profile = Profile.objects.get(user=user_object)
+#   DeletePost(post_id)
+#   return render(request, 'profile.html')
+####################
+  # print("ID:",post_id)
+  # if request.method == "POST":
+  #   username = request.user.username 
+  #   try:
+  #     print("Did I make it?")
+  #     Post.objects.get(id=post_id, username=username).delete()
+  #     # post.delete()
+  #     return redirect("home")
+  #   except ObjectDoesNotExist:
+  #     return redirect('home')
+  # return redirect('home')
 
 
-  post = Post.objects.get(id=post_id)
+  # post = Post.objects.get(id=post_id)
 
-  selectedPost = Post.objects.filter(post_id=post_id, username=username).first()
-  selectedPost.delete()
-  return redirect('profile')
+  # selectedPost = Post.objects.filter(post_id=post_id, username=username).first()
+  # selectedPost.delete()
+  # return redirect('profile')
 
 def is_admin(user):
   return user.is_authenticated and user.is_staff

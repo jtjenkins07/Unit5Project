@@ -142,13 +142,23 @@
 								<div class="central-meta">
 									<ul class="photos">
 										{% for post in user_posts %}
-											<a class="strip" href="{{post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-												<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt=""></a>
-										</li>
-										<form action="{% url 'delete_post' post.id %} method="POST" style="top: 10px; right: 10px;">
-										{% csrf_token %}
-										<button type="submit" style="background:none, border:none; color:red; font-size:24px; cursor: pointer;">&times;</button>
-										</form>
+										
+												<center><a class="strip" href="{{post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
+											<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt=""></a></center></li>
+											
+											<form action="" method="POST">
+											{% csrf_token %}
+											<input value={{post.id}} name="delete" style: hidden></input>
+											{% if user.username == post.user %}
+												<center><input type="submit" value="X" style="background-color: red ; color: white; font-weight: bold;"></input></center>
+											{% endif %}
+											{% comment %} <a href="{% url "delete_post" post.id %}">Test</a></form> {% endcomment %}
+											</form>
+										{% comment %} <form action="{% url 'delete_post' post.id %} method="POST" style="top: 10px; right: 10px;">
+										{% csrf_token %} {% endcomment %}
+										{% comment %} <button type="submit" style="background:none, border:none; color:red; font-size:24px; cursor: pointer;">&times;</button> {% endcomment %}
+
+										{% comment %} </form> {% endcomment %}
 										{% endfor %}
 							
 					

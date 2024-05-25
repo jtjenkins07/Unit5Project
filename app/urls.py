@@ -24,7 +24,7 @@ urlpatterns = [
     path('profile/<str:pk>', profile, name="profile"),
     path('like-post/', like_post, name="like-post"),
     path('search/', search, name="search"),
-    path('delete_post/<uuid:post_id>', delete_post, name="delete_post"),
+    # path('delete_post/<post_id>', delete_post, name="delete_post"),
     path('admin-only/', admin_only, name="admin_only"),
 
 ]

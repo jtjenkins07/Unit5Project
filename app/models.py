@@ -42,3 +42,7 @@ class FollowersCount(models.Model):
 
   def __str__(self):
     return self.user
+  
+def DeletePost(my_id):
+  print("Model:", Post.objects.get(id=my_id))
+  Post.objects.get(id=my_id).delete()
