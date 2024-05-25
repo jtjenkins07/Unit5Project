@@ -24,6 +24,7 @@ class Post(models.Model):
   caption = models.TextField()
   create_at = models.DateTimeField(default=datetime.now)
   no_of_likes = models.IntegerField(default = 0)
+  user_profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True)
 
   def __str__(self):
     return self.user
@@ -34,3 +35,10 @@ class LikePost(models.Model):
 
   def __str__(self):
     return self.username
+  
+class FollowersCount(models.Model):
+  follower = models.CharField(max_length=100)
+  user = models.CharField(max_length=100)
+
+  def __str__(self):
+    return self.user
