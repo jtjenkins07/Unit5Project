@@ -145,7 +145,8 @@
 										{% for post in user_posts %}
 										
 												<center><a class="strip" href="{{post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-											<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt=""></a></center></li>
+											<img src="{{post.image.url}}" style="height: 250px; width: 300px; align-self: start;
+											object-fit: cover;" alt=""></a></center></li>
 											
 											<form action="" method="POST">
 											{% csrf_token %}
